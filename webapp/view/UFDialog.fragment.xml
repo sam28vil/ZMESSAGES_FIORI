@@ -1,0 +1,16 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+
+<Dialog 
+    id="UfDialog"
+    xmlns="sap.m" title="XML Fragment Dialog">
+    <Text text="Digite a UF" id='txtUf' />
+    <Input id='inpNewUf' width="10%"/>
+    <buttons>
+        <Button text="Close" press="closeUFDialog"/>
+    </buttons>
+</Dialog>
+
+</c:FragmentDefinition>

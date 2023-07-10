@@ -1,0 +1,82 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+    xmlns:u="sap.ui.unified"
+>
+
+<VBox>
+<Table
+    id="tableAnexo"
+    width="auto"
+    items="{
+        path: '/AnexoSet',
+        sorter: {
+            path: 'Filename',
+            descending: false
+        }
+    }"
+    noDataText="{worklistView>/tableNoDataText}"
+    busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+    growing="true"
+    growingScrollToLoad="true"
+    updateFinished=".onUpdateFinished">
+
+    <headerToolbar>
+        <OverflowToolbar>
+            <Title
+                id="tableAnexoHeader"
+                text="{worklistView>/worklistTableTitle}"
+                level="H3"/>
+            <ToolbarSpacer />
+
+            <u:FileUploader
+                id="fileUploader"
+                name="myFileUpload"
+                useMultipart="false"
+                uploadUrl="/sap/opu/odata/sap/ZMONITORVENDAS_SRV/AnexoSet"
+                tooltip="Upload your file to the local server"
+                uploadComplete="handleUploadComplete"/>
+            <Button
+                text="Upload File"
+                press="handleUploadPress"/>
+
+
+        </OverflowToolbar>
+    </headerToolbar>
+
+    <columns>
+        <Column >
+            <Text text="{i18n>tableNameColumnTitle}" />
+        </Column>
+        <Column  hAlign="End">
+            <Text text="{i18n>tableUnitNumberColumnTitle}"/>
+        </Column>
+    </columns>
+
+    <items>
+        <ColumnListItem
+            type="Navigation"
+            press=".onPressAnexo">
+            <cells>
+                <ObjectIdentifier
+                    title="{Filename}"/>
+
+                <ObjectAttribute text="{Mimetype}" active="true" press="fun"/>								
+                
+            </cells>
+        </ColumnListItem>
+    </items>
+</Table>
+
+<Image
+    id="image"    
+    src="data:image/png;base64, {Value}"
+    height="50%"
+    width="50%"
+>
+
+</Image>
+
+</VBox>
+
+</c:FragmentDefinition>

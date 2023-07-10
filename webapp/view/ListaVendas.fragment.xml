@@ -1,0 +1,47 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core" >
+   <List
+        headerText="Lista de Vendas"
+        growing="true"
+		growingThreshold="4"
+		growingScrollToLoad="false"
+        class="sapUiResponsiveMargin"
+        width="auto"
+        items="{/VendaSet}" >
+        <items>
+
+			<core:ExtensionPoint name="VendaItemList">
+            <ObjectListItem
+			title="{Descricao}"
+			number="{
+				parts: [{path: 'ValorLiquido'}, {path: 'view>/moeda'}],
+				type: 'sap.ui.model.type.Currency',
+				formatOptions: {
+					showMeasure: true
+				}
+			}"
+			numberState="{=	${ValorLiquido} > 500 ? 'Error' : 'Success' }"
+			>
+
+			<attributes>
+			<ObjectAttribute text="{IDVenda}" />
+			<ObjectAttribute 
+				text="{
+					path: 'DataCriacao',
+					type: 'sap.ui.model.type.Date',
+									formatOptions: 
+									{              
+									style: 'short',
+										UTC: true
+									}
+								}"
+	 />
+			</attributes>
+		</ObjectListItem>
+
+	</core:ExtensionPoint>
+
+      </items>
+   </List>
+</core:FragmentDefinition> 

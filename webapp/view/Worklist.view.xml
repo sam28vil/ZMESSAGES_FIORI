@@ -1,0 +1,169 @@
+<mvc:View
+	controllerName="cristianofiori.cadastroclientes.controller.Worklist"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:semantic="sap.f.semantic">
+
+	<semantic:SemanticPage
+		
+		showFooter="{= ${messagez>/}.length > 0 }"
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<Title
+				text="{i18n>worklistTitle}"
+				level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:content>
+
+			<IconTabBar id="idIconTabBarFiori2" upperCase="true" expanded="{device>/isNoPhone}"
+				selectedKey="key1"
+				class="sapUiResponsiveContentPadding">
+				<items>
+				  <IconTabFilter text="Clientes" key="key1">
+					<content>    
+			
+						<Table
+							id="table"
+							width="auto"
+							mode="MultiSelect"
+							delete="onClienteDelete"
+							items="{
+								path: '/ClienteSet',
+								sorter: {
+									path: 'ClienteID',
+									descending: true
+								}
+							}"
+							noDataText="{worklistView>/tableNoDataText}"
+							busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+							growing="true"
+							growingScrollToLoad="false"
+							growingThreshold="20"
+							updateFinished=".onUpdateFinished">
+
+							<headerToolbar>
+								<OverflowToolbar>
+									<Title
+										id="tableHeader"
+										text="Lista de Clientes"
+										level="H3"/>
+
+									<ToolbarSpacer />
+									<core:ExtensionPoint name="ExtClienteTabPanel"/>
+
+
+									<Button text="Leitura"  press="onClienteRead" />
+									<Button icon="sap-icon://delete" press="onClienteDelete" />
+									<Button text="Criar" type="Emphasized" press="onCriarCliente" />
+									<SearchField
+										id="searchField"
+										tooltip="{i18n>worklistSearchTooltip}"
+										search="onSearchCustom">
+										<layoutData>
+											<OverflowToolbarLayoutData
+												maxWidth="200px"
+												priority="NeverOverflow"/>
+										</layoutData>
+									</SearchField>
+								</OverflowToolbar>
+							</headerToolbar>
+
+							<columns>
+								<Column id="codeColumn">
+									<Text text="ID do Cliente" id="codeColumnTitle"/>
+								</Column>
+								<Column id="nameColumn">
+									<Text text="Nome" id="nameColumnTitle"/>
+								</Column>
+								<Column id="unitNumberColumn" hAlign="End">
+									<Text text="UF" id="unitNumberColumnTitle"/>
+								</Column>
+								<Column hAlign="End">
+									<Text text="Status" />
+								</Column>
+								<Column hAlign="End">
+									<Text text="Alterar Status" />
+								</Column>
+							</columns>
+
+							<items>
+								<ColumnListItem
+									type="Navigation"
+									press=".onPress">
+									<cells>
+										<ObjectIdentifier
+
+											
+											title="{
+												path: 'ClienteID',
+												formatter: '.formatter.idText'
+												}"/>
+
+											<ObjectAttribute
+											text="{Nome}"/>
+
+											<ObjectStatus
+											text="{UF}"/>
+											
+											<ObjectStatus
+											
+											text="{
+												path: 'Status',
+												formatter: '.formatter.statusText'
+												}"/>
+
+										<Button icon="sap-icon://letter" press="onAlterarStatus" />
+
+
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</content>
+				</IconTabFilter>
+				
+				<IconTabFilter text="Vendas" key="key2">
+				  <content>
+
+					<core:Fragment fragmentName="cristianofiori.cadastroclientes.view.ListaVendas" type="XML" />
+
+				</content>
+			</IconTabFilter>
+
+			<IconTabFilter text="Anexos" key="key3">
+				<content>
+
+				  <core:Fragment fragmentName="cristianofiori.cadastroclientes.view.AnexosList" type="XML" />
+
+			  </content>
+		  </IconTabFilter>
+
+		  <core:ExtensionPoint name="ExtWorklistTab"/>
+	  
+			</items>
+		</IconTabBar>
+	  
+		</semantic:content>
+
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+		<semantic:footerCustomActions>
+			<Button 
+			icon="sap-icon://alert"
+			text="{= ${messagez>/}.length }"
+			visible="{= ${messagez>/}.length > 0 }"
+			type="Emphasized"
+			press="onMessagePopoverPress"
+			></Button>
+		</semantic:footerCustomActions>
+
+	</semantic:SemanticPage>
+
+</mvc:View>
